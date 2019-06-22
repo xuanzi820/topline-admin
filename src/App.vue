@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Component</p>
+    <p><i class="iconfont iconlove"></i>Component</p>
   </div>
 </template>
 <script>
