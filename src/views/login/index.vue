@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import '@/vendor/gt'
 import axios from 'axios'
 export default {
   name: 'AppLogin',
@@ -57,32 +58,28 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-    .login-wrap {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #ccc;
-
-        .login-form-wrap {
-            background-color: #fff;
-            padding: 40px 50px;
-            border-radius: 10px;
-
-            .login-head {
-                display: flex;
-                justify-content: center;
-                margin-bottom: 10px;
-
-                img {
-                    width: 150px;
-                }
-            }
-
-            .btn-login {
-                width: 100%;
-                background-color: yellowgreen;
+.login-wrap {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccc;
+    .login-form-wrap {
+        background-color: #fff;
+        padding: 40px 50px;
+        border-radius: 10px;
+        .login-head {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            img {
+                width: 150px;
             }
         }
+       .btn-login {
+            width: 100%;
+            background-color: yellowgreen;
+        }
     }
+}
 </style>
