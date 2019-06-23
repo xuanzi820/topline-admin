@@ -56,8 +56,10 @@ export default {
         this.$router.push({
           name: 'home'
         })
-      }).catch(res => { // 状态码>=400的都会进入此处
-        this.$message.error('登陆失败，手机号或验证码错误')
+      }).catch(err => { // 状态码>=400的都会进入此处
+        if (err.response.status === 400) {
+          this.$message.error('登陆失败，手机号或验证码错误')
+        }
       })
     },
     handleSendCode() {
