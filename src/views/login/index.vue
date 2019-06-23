@@ -15,7 +15,13 @@
                             <el-input v-model="form.code" placeholder="验证码"></el-input>
                         </el-col>
                         <el-col :span="10" :offset="2">
-                            <el-button @click="handleSendCode">发送验证码</el-button>
+                          <!-- <el-button @click="handleSendCode">获取验证码</el-button> -->
+                          <el-button
+                          @click="handleSendCode"
+                          :disabled="!!codeTimer"
+                          >
+                            {{codeTimer ? `剩余${codeSecons}秒` : '获取验证码' }}
+                          </el-button>
                         </el-col>
                     </el-form-item>
                     <el-form-item prop="agree">
@@ -40,6 +46,7 @@
 <script>
 import '@/vendor/gt'
 import axios from 'axios'
+const initCodeSeconds = 60
 export default {
   name: 'AppLogin',
   data() {
@@ -64,7 +71,9 @@ export default {
           { pattern: /true/, message: '请同意用户协议', trigger: 'change' }
         ]
       },
-      capchaObj: null // 通过 initGeetest 得到的极验验证码对象
+      capchaObj: null, // 通过 initGeetest 得到的极验验证码对象
+      codeSecons: initCodeSeconds, // 倒计时的时间
+      codeTimer: null // 倒计时定时器
     }
   },
   methods: {
@@ -115,6 +124,7 @@ export default {
       if (this.capchaObj) {
         return this.capchaObj.verify()
       }
+      // 函数中的 function 定义的函数中的 this 指向 window
       axios({
         method: 'GET',
         url: `http://ttapi.research.itcast.cn/mp/v1_0/captchas/${mobile}`
@@ -130,9 +140,9 @@ export default {
         }, (captchaObj) => {
           this.capchaObj = captchaObj
           console.log(this)
-          captchaObj.onReady(function() {
+          captchaObj.onReady(() => {
             captchaObj.verify()
-          }).onSuccess(function() {
+          }).onSuccess(() => {
             // console.log('验证成功了')
             const {
               geetest_challenge: challenge,
@@ -148,12 +158,26 @@ export default {
                 validate
               }
             }).then(res => {
-              console.log(res.data)
+              // console.log(res.data)
+              this.codeCountdown()
             })
           })
         }
         )
       })
+    },
+    /*
+    *倒计时
+    */
+    codeCountdown() {
+      this.codeTimer = window.setInterval(() => {
+        this.codeSecons--
+        if (this.codeSecons <= 0) {
+          this.codeSecons = initCodeSeconds // 让倒计时的时间回到初始值
+          window.clearInterval(this.codeTimer) // 清除定时器
+          this.codeTimer = null
+        }
+      }, 1000)
     }
   }
 }
