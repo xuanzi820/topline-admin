@@ -100,6 +100,17 @@ export default {
       })
     },
     handleSendCode() {
+      // 检验手机号是否有效
+      this.$refs['ruleForm'].validateField('mobile', errorMessage => {
+        // console.log('errorMessage => ', errorMessage)
+        if (errorMessage.trim().length > 0) {
+          return
+        }
+        // 手机号码有效，初始化验证码插件
+        this.showGeetest()
+      })
+    },
+    showGeetest() {
       const { mobile } = this.form
       if (this.capchaObj) {
         return this.capchaObj.verify()
