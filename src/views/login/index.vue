@@ -20,7 +20,7 @@
                     </el-form-item>
                     <el-form-item>
                         <!-- 给组件加class,会作用到它的根元素 -->
-                        <el-button class="btn-login" type="primary" @click="onSubmit">登录</el-button>
+                        <el-button class="btn-login" type="primary" @click="handleLogin">登录</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -43,8 +43,22 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!')
+    handleLogin() {
+      axios({
+        method: 'POST',
+        url: 'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+        data: this.form
+      }).then(res => { // 状态码>=200&&<400的都会进入此处
+        this.$message({
+          message: '登陆成功',
+          type: 'success'
+        })
+        this.$router.push({
+          name: 'home'
+        })
+      }).catch(res => { // 状态码>=400的都会进入此处
+        this.$message.error('登陆失败，手机号或验证码错误')
+      })
     },
     handleSendCode() {
       const { mobile } = this.form
@@ -69,7 +83,23 @@ export default {
           captchaObj.onReady(function() {
             captchaObj.verify()
           }).onSuccess(function() {
-            console.log('验证成功了')
+            // console.log('验证成功了')
+            const {
+              geetest_challenge: challenge,
+              geetest_validate: validate,
+              geetest_seccode: seccode } =
+            captchaObj.getValidate()
+            axios({
+              method: 'GET',
+              url: `http://ttapi.research.itcast.cn/mp/v1_0/sms/codes/${mobile}`,
+              params: { // 专门用来传递query查询字符串参数
+                challenge,
+                seccode,
+                validate
+              }
+            }).then(res => {
+              console.log(res.data)
+            })
           })
         }
         )
