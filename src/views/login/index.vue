@@ -18,7 +18,7 @@
                           <!-- <el-button @click="handleSendCode">获取验证码</el-button> -->
                           <el-button
                           @click="handleSendCode"
-                          :disabled="!!codeTimer"
+                          :disabled="!!codeTimer || codeLoading"
                           >
                             {{codeTimer ? `剩余${codeSecons}秒` : '获取验证码' }}
                           </el-button>
@@ -56,7 +56,6 @@ export default {
         code: '',
         agree: '' // 是否同意用户协议
       },
-      loginLoading: false, // 登录按钮的loading状态
       rules: { // 表单验证规则
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
@@ -71,10 +70,12 @@ export default {
           { pattern: /true/, message: '请同意用户协议', trigger: 'change' }
         ]
       },
+      loginLoading: false, // 登录按钮的loading状态
       capchaObj: null, // 通过 initGeetest 得到的极验验证码对象
       codeSecons: initCodeSeconds, // 倒计时的时间
       codeTimer: null, // 倒计时定时器
-      sendMobile: '' // 保存初始化验证码之后发送短信的手机号
+      sendMobile: '', // 保存初始化验证码之后发送短信的手机号
+      codeLoading: false
     }
   },
   methods: {
@@ -136,6 +137,8 @@ export default {
     },
     showGeetest() {
       // 函数中的 function 定义的函数中的 this 指向 window
+      // 初始化验证码期间，禁用按钮的点击标志
+      this.codeLoading = true
       axios({
         method: 'GET',
         url: `http://ttapi.research.itcast.cn/mp/v1_0/captchas/${this.form.mobile}`
@@ -154,6 +157,8 @@ export default {
           captchaObj.onReady(() => {
             this.sendMobile = this.form.mobile
             captchaObj.verify()
+            // 初始化验证码好了，让“获取验证码”按钮可点击
+            this.codeLoading = false
           }).onSuccess(() => {
             // console.log('验证成功了')
             const {
