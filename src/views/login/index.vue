@@ -95,6 +95,9 @@ export default {
         url: 'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
         data: this.form
       }).then(res => { // 状态码>=200 && <400的都会进入此处
+        // 登录成功，将接口返回的用户信息数据存储到本地
+        window.localStorage.setItem('user_info', JSON.stringify(res.data.data))
+        // Element 提供的 Message 消息提示组件，这也是组件调用的一种形式
         this.$message({
           message: '登陆成功',
           type: 'success'
