@@ -18,57 +18,39 @@
       text-color="#adafb5"
       router
       active-text-color="#409eff">
-      <el-menu-item index="3">
+      <el-menu-item index="2">
         <i class="iconfont iconshouye"></i>
         <span slot="title">首页</span>
       </el-menu-item>
       <el-submenu index="1">
         <template slot="title">
           <i class="iconfont icongengduoneirong"></i>
-          <span>内容管理</span>
+          <span>内容</span>
         </template>
-        <el-menu-item index="1-2">
+        <el-menu-item index="/publish">
           <i class="iconfont iconfabuwenzhang2"></i>
-          <span slot="title">发布文章</span>
+          <span slot="title">发布</span>
         </el-menu-item>
         <el-menu-item index="1-3">
           <i class="iconfont iconneirongliebiao"></i>
           <span slot="title">内容列表</span>
         </el-menu-item>
-        <el-menu-item index="1-4">
-          <i class="iconfont iconpinglunliebiao"></i>
-          <span slot="title">评论列表</span>
-        </el-menu-item>
-        <el-menu-item index="1-5">
-          <i class="iconfont iconsucaiguanli1"></i>
-          <span slot="title">素材管理</span>
-        </el-menu-item>
       </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="iconfont iconfensiguanli1"></i>
-          <span>粉丝管理</span>
-        </template>
-        <el-menu-item index="2-2">
-          <i class="iconfont iconsucaiguanli"  style="font-size: 14px;" ></i>
-          <span slot="title">图文数据</span>
-        </el-menu-item>
-        <el-menu-item index="2-3">
-          <i class="iconfont iconyichang_fensiliebiaoweikong_64" width="16px"></i>
-          <span slot="title">粉丝概况</span>
-        </el-menu-item>
-        <el-menu-item index="2-4">
-          <i class="iconfont  iconfensi1-copy"  style="font-size: 14px;" ></i>
-          <span slot="title">粉丝画像</span>
-        </el-menu-item>
-        <el-menu-item index="2-5">
-          <i class="iconfont iconfensiliebiao4"></i>
-          <span slot="title">粉丝列表</span>
+      <el-menu-item index="/comment">
+        <i class="iconfont iconpinglun2"></i>
+        <span slot="title">评论</span>
       </el-menu-item>
-      </el-submenu>
-      <el-menu-item index="4">
+      <el-menu-item index="/image">
+        <i class="iconfont iconsucaiguanli"></i>
+        <span slot="title">素材</span>
+      </el-menu-item>
+      <el-menu-item index="/fans">
+        <i class="iconfont iconfensiguanli1" width="16px"></i>
+        <span slot="title">粉丝</span>
+      </el-menu-item>
+      <el-menu-item index="/account">
         <i class="iconfont iconzhanghuxinxi"></i>
-        <span slot="title">账户信息</span>
+        <span slot="title">账户</span>
       </el-menu-item>
     </el-menu>
 </template>
