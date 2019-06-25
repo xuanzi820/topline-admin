@@ -31,6 +31,11 @@ const router = new Router({
           name: 'publish',
           path: '/publish', // 它是layout组件的子路由
           component: () => import('@/views/publish')
+        },
+        {
+          name: 'article-list',
+          path: '/article', // 它是layout组件的子路由
+          component: () => import('@/views/article')
         }
       ]
     },
