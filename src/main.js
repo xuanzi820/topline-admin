@@ -5,6 +5,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/index.less'
 import router from './router'
+import 'nprogress/nprogress.css'
 
 Vue.use(ElementUI)
 
