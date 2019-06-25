@@ -3,7 +3,10 @@
       <el-aside width="200px"><AppAside/></el-aside>
       <el-container>
         <el-header><AppHeader/></el-header>
-        <el-main>Main</el-main>
+        <el-main>
+        <!-- Layout组件的路由出口   -->
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
     <!-- 这里是内容是 Home、发布文章、评论管理。。。。 -->

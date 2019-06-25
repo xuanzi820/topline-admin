@@ -18,7 +18,7 @@
       text-color="#adafb5"
       router
       active-text-color="#409eff">
-      <el-menu-item index="2">
+      <el-menu-item index="/">
         <i class="iconfont iconshouye"></i>
         <span slot="title">首页</span>
       </el-menu-item>
