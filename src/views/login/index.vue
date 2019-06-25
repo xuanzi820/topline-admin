@@ -45,7 +45,7 @@
 
 <script>
 import '@/vendor/gt'
-import axios from 'axios'
+// import axios from 'axios'
 const initCodeSeconds = 60
 export default {
   name: 'AppLogin',
@@ -90,9 +90,9 @@ export default {
     },
     submitLogin() {
       this.loginLoading = true
-      axios({
+      this.$http({
         method: 'POST',
-        url: 'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+        url: '/authorizations',
         data: this.form
       }).then(res => { // 状态码>=200 && <400的都会进入此处
         // 登录成功，将接口返回的用户信息数据存储到本地
@@ -142,9 +142,9 @@ export default {
       // 函数中的 function 定义的函数中的 this 指向 window
       // 初始化验证码期间，禁用按钮的点击标志
       this.codeLoading = true
-      axios({
+      this.$http({
         method: 'GET',
-        url: `http://ttapi.research.itcast.cn/mp/v1_0/captchas/${this.form.mobile}`
+        url: `/captchas/${this.form.mobile}`
       }).then(res => {
         // console.log(res.data)
         const data = res.data.data
@@ -169,9 +169,9 @@ export default {
               geetest_validate: validate,
               geetest_seccode: seccode } =
             captchaObj.getValidate()
-            axios({
+            this.$http({
               method: 'GET',
-              url: `http://ttapi.research.itcast.cn/mp/v1_0/sms/codes/${this.form.mobile}`,
+              url: `/sms/codes/${this.form.mobile}`,
               params: { // 专门用来传递query查询字符串参数
                 challenge,
                 seccode,
