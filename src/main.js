@@ -24,6 +24,7 @@ axios.interceptors.request.use(config => {
   console.log('有请求经过了')
   // return config // 就是允许通过的方式
   // config是本次请求相关的配置对象
+  // 我们可以通过修改config配置来统一自定义请求相关参数
   console.log(config)
   config.headers.Authorization = `Bearer ${userInfo.token}`
   return config
@@ -32,10 +33,14 @@ axios.interceptors.request.use(config => {
 })
 /*
 Axios响应拦截器
+统一处理响应的数据格式
 */
-axios.interceptors.response.use(response => {
-  return response
-}, error => {
+axios.interceptors.response.use(response => { // >=200 &&<400的状态码进入这里
+  console.log('response => ', response)
+  // return response
+  return response.data.data
+}, error => { // >=400的状态码进入这里
+  console.log('response error => ', error)
   return Promise.reject(error)
 })
 // 几乎每个组件都要使用axios去发请求，频繁的import就变得非常麻烦

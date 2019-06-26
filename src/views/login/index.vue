@@ -94,9 +94,9 @@ export default {
         method: 'POST',
         url: '/authorizations',
         data: this.form
-      }).then(res => { // 状态码>=200 && <400的都会进入此处
+      }).then(data => { // 状态码>=200 && <400的都会进入此处
         // 登录成功，将接口返回的用户信息数据存储到本地
-        window.localStorage.setItem('user_info', JSON.stringify(res.data.data))
+        window.localStorage.setItem('user_info', JSON.stringify(data))
         // Element 提供的 Message 消息提示组件，这也是组件调用的一种形式
         this.$message({
           message: '登陆成功',
@@ -145,9 +145,9 @@ export default {
       this.$http({
         method: 'GET',
         url: `/captchas/${this.form.mobile}`
-      }).then(res => {
+      }).then(data => {
         // console.log(res.data)
-        const data = res.data.data
+        // const data = res.data.data
         window.initGeetest({
           challenge: data.challenge,
           gt: data.gt,
@@ -177,7 +177,7 @@ export default {
                 seccode,
                 validate
               }
-            }).then(res => {
+            }).then(data => {
               // console.log(res.data)
               this.codeCountdown()
             })
