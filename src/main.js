@@ -14,8 +14,8 @@ import 'nprogress/nprogress.css'
 // 也就是说配置了这个东西，你就不用每次都写长长的http://xxxx
 // 只需要，例如axios({ url: 'authorizations'})
 // 路径中的/ ，多退少补
-axios.defaults.baseURL = 'http://toutiao.course.itcast.cn/mp/v1_0/'
-// axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
+// axios.defaults.baseURL = 'http://toutiao.course.itcast.cn/mp/v1_0/'
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 /*
 Axios请求拦截器
 所有使用axios发送的请求都要经过这里
