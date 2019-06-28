@@ -160,12 +160,30 @@ export default {
     },
     handleDelete(article) {
       // console.log(article)
-      this.$http({
-        method: 'DELETE',
-        url: `/articles/${article.id}`
-      }).then(data => {
-        // console.log(data)
-        this.loadArticles(this.page)
+      this.$confirm('确认删除吗?', '删除提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // 发送删除请求
+        this.$http({
+          method: 'DELETE',
+          url: `/articles/${article.id}`
+        }).then(data => {
+          // 提示删除成功
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          // 重新加载数据列表
+          this.loadArticles(this.page)
+        })
+      }).catch(() => {
+        // 取消删除
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     }
   }
