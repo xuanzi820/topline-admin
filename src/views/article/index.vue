@@ -126,7 +126,8 @@ export default {
         value1: ''
       },
       totalCount: 0,
-      articleLoading: false
+      articleLoading: false,
+      page: 1
     }
   },
   created() {
@@ -153,6 +154,7 @@ export default {
       console.log('submit!')
     },
     handleCurrentChange(page) {
+      this.page = page
       // console.log('submit!')
       this.loadArticles(page)
     },
@@ -163,6 +165,7 @@ export default {
         url: `/articles/${article.id}`
       }).then(data => {
         // console.log(data)
+        this.loadArticles(this.page)
       })
     }
   }

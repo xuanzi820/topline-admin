@@ -23,7 +23,13 @@ axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0/'
 // 可以使用json-bigint来处理，它会帮你把超出范围的数字给处理好
 axios.defaults.transformResponse = [function(data) {
   // data 是未经处理的后端响应数据：JSON 格式字符串
-  return JSONbig.parse(data)
+  try {
+    // data 数据可能不是标准的 JSON 格式字符串，否则会导致 JSONbig.parse(data) 转换失败报错
+    return JSONbig.parse(data)
+  } catch (err) {
+    // 无法转换的数据直接原样返回
+    return data
+  }
 }]
 /*
 Axios请求拦截器
@@ -33,9 +39,10 @@ axios.interceptors.request.use(config => {
   const userInfo = JSON.parse(window.localStorage.getItem('user_info'))
   // console.log('有请求经过了')
   // return config // 就是允许通过的方式
+  // console.log('request userInfo => ',userInfo)
+  // console.log('request config => ',config)
   // config是本次请求相关的配置对象
   // 我们可以通过修改config配置来统一自定义请求相关参数
-  // console.log(config)
   // 如果登录了，才给那些需要token的接口统一添加token令牌
   // 登录相关接口不需要token令牌，想要也没有
   if (userInfo) {
@@ -43,6 +50,7 @@ axios.interceptors.request.use(config => {
   }
   return config
 }, error => {
+  // console.log('request error', error)
   return Promise.reject(error)
 })
 /*
@@ -51,8 +59,14 @@ Axios响应拦截器
 */
 axios.interceptors.response.use(response => { // >=200 &&<400的状态码进入这里
   // console.log('response => ', response)
+  // return response
   // 将响应数据处理成统一的数据格式方便使用
-  return response.data.data
+  // 如果返回的数据格式是对象
+  if (typeof response.data === 'object') {
+    return response.data.data
+  } else {
+    return response.data
+  }
 }, error => { // >=400的状态码进入这里
   // console.log('response error => ', error)
   // console.dir(error)
