@@ -5,7 +5,7 @@
       <div slot="header" class="clearfix">
         <span>筛选条件</span>
       </div>
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="filterParams" label-width="80px">
         <el-form-item label="状态">
           <el-radio-group v-model="filterParams.status">
             <el-radio label="">全部</el-radio>
@@ -19,6 +19,7 @@
         </el-form-item>
         <el-form-item label="频道">
           <el-select v-model="filterParams.channel_id" placeholder="请选择活动区域">
+            <el-option label="全部" value=""></el-option>
             <el-option
               v-for="item in channels"
               :key="item.id"
@@ -107,8 +108,10 @@
 
       <!-- 数据分页 -->
       <!--
-        一、 分多少页，默认每页10条
-             有多少条数据
+        一、分多少页，默认每页10条
+            有多少条数据
+            total  总记录数
+            current-page 当前页码，也就是高亮的那个页码
         二、页面改变加载对应的页码数据
       -->
       <el-pagination
@@ -117,6 +120,7 @@
         :total="totalCount"
         :disabled="articleLoading"
         @current-change="handleCurrentChange"
+        :current-page="page"
         >
       </el-pagination>
       <!-- /数据分页 -->
@@ -183,7 +187,7 @@ export default {
         }
       }
 
-      console.log(filterData)
+      // console.log(filterData)
 
       this.$http({
         method: 'GET',
@@ -210,8 +214,8 @@ export default {
       })
     },
     onSubmit() {
-      // this.page = 1
-      this.loadArticles()
+      this.page = 1 // 让分页组件的页码回到第1页
+      this.loadArticles() // 加载第1页的数据
     },
     handleCurrentChange(page) {
       this.page = page
