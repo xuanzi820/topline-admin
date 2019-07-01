@@ -27,9 +27,14 @@ const router = new Router({
           path: '', // 它是layout组件的默认子路由
           component: () => import('@/views/home')
         },
-        {
+        { // 发布文章
           name: 'publish',
           path: '/publish', // 它是layout组件的子路由
+          component: () => import('@/views/publish')
+        },
+        { // 编辑文章
+          name: 'publish-edit',
+          path: '/publish/:id', // 它是layout组件的子路由
           component: () => import('@/views/publish')
         },
         {

@@ -7,7 +7,7 @@
     :value="value"
     @change="handleChange"
     clearable>
-    <el-option label="全部" value=""></el-option>
+    <!-- <el-option label="全部" value=""></el-option> -->
     <el-option
       v-for="item in channels"
       :key="item.id"
