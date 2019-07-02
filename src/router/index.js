@@ -42,6 +42,11 @@ const router = new Router({
           path: '/comment', // 它是layout组件的子路由
           component: () => import('@/views/comment')
         },
+        { // 账户信息
+          name: 'account-setting',
+          path: '/account', // 它是layout组件的子路由
+          component: () => import('@/views/account')
+        },
         {
           name: 'article-list',
           path: '/article', // 它是layout组件的子路由
