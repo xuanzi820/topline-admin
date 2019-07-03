@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <div slot="header">
-      <span>账户设置</span>
+      <span>账户设置{{$store.state.count}}</span>
     </div>
     <el-row>
       <el-col :span="8">
